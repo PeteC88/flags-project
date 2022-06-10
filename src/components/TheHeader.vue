@@ -3,9 +3,7 @@
     <ul class="navigation" :class="{ 'dark-mode-elements': this.isDark }">
       <li>
         <h3>
-          <router-link to="/frontend-mentor-flags-project/"
-            >Where in the world?</router-link
-          >
+          <router-link to="/">Where in the world?</router-link>
         </h3>
       </li>
       <li class="dark-mode-switcher" @click="darkModeSwitch">
