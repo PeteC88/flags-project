@@ -14,7 +14,7 @@ export default {
     to: {
       type: String,
       required: false,
-      default: "/frontend-mentor-flags-project/",
+      default: "/",
     },
     isDark: {
       type: Boolean,

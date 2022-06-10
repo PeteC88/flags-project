@@ -11,15 +11,15 @@ const router = createRouter({
     routes: [
         {
             //if the user will enter only the slash he will be redirect to the home page
-            path: '/frontend-mentor-flags-project/',
-            redirect: '/frontend-mentor-flags-project/home'
+            path: '/',
+            redirect: '/home'
         },
         {
-            path: '/frontend-mentor-flags-project/home',
+            path: '/home',
             component: NationsList
         },
         {
-            path: '/frontend-mentor-flags-project/home/:name',
+            path: '/home/:name',
             component: NationDetails,
             //the id (name of the nation in this case) of the signle item will be sent as a prop
             props: true
