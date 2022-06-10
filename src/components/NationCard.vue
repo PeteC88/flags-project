@@ -63,14 +63,14 @@ li img {
 @media screen and (min-width: 1200px) {
   li {
     width: 15rem;
-    height: 420px;
+    height: 360px;
   }
   li img {
     width: 100%;
     height: 150px;
   }
-  .country-details h3 {
-  height: 55%;
-}
+  .country-details {
+    height: 58%;
+  }
 }
 </style>
