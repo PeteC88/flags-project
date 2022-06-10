@@ -259,12 +259,12 @@ export default {
 }
 @media screen and (min-width: 1200px) {
   .country-list__grid {
-    grid-template-columns: repeat(auto-fill, 150px);
-    gap: 5rem;
+    /* grid-template-columns: repeat(auto-fill, 230px); */
+    gap: 2rem;
     height: 55%;
   }
   li img {
-    height: 100px;
+    height: 150px;
   }
 }
 </style>
