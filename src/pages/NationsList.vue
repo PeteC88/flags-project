@@ -194,7 +194,7 @@ export default {
 .country-list__grid {
   display: grid;
   width: 100%;
-  grid-template-columns: repeat(auto-fill, 300px);
+  grid-template-columns: repeat(auto-fill, 255px);
   justify-content: center;
   gap: 5rem;
   padding: 1.5rem 1.5rem 0.9rem 1.5rem;
