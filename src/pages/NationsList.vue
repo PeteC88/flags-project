@@ -140,6 +140,7 @@ export default {
   margin-top: 1.5rem;
   transition: transform 0.5s;
   transform: translate3d(0, 0, 0);
+  background-color: hsl(0, 0%, 98%);
 }
 .search--hidden {
   box-shadow: none;
