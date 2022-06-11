@@ -143,7 +143,6 @@ export default {
 .country {
   position: relative;
   padding: 7rem 1.5rem 0 1.5rem;
-  height: 100vh;
 }
 .button.back-button {
   display: flex;
