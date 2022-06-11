@@ -102,7 +102,6 @@ export default {
       this.isLoading = true;
       try {
         await this.$store.dispatch("loadNations");
-        //this.getBordersNames();
       } catch (error) {
         this.error = error.message || "Something went wrong";
       }
@@ -115,6 +114,7 @@ export default {
       if (!this.filteredNation.borders) {
         this.countryBorderNames = [];
       } else {
+        //create an array of object with the code cca3 and the corresponding nation name of all the nations in order to extract this last one
         for (let i = 0; i < nations.length; i++) {
           this.countryBorderNames.push({
             nationBorderName: nations[i].cca3,
@@ -125,6 +125,7 @@ export default {
 
       const renamedBorders = [];
 
+      //filter to extract only the borders from countryBorderNames and then push only the common name
       const filterBorders = this.countryBorderNames.filter((border) =>
         this.filteredNation.borders.includes(border.nationBorderName)
       );
