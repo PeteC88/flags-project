@@ -1,6 +1,13 @@
 <template>
-  <the-header></the-header>
-  <router-view></router-view>
+  <div
+    class="wrapper"
+    :class="{ 'body-dark-mode': this.$store.getters.isDarkSwitcher }"
+  >
+    <the-header></the-header>
+    <router-view
+      :class="{ 'body-dark-mode': this.$store.getters.isDarkSwitcher }"
+    ></router-view>
+  </div>
 </template>
 
 <script>
@@ -10,21 +17,6 @@ export default {
   name: "App",
   components: {
     TheHeader,
-  },
-  //To get the state var "isDark" and use it in a watcher I have imported {mapState} from vuex and I have called the var isDark
-  computed: {
-    isDark() {
-      return this.$store.getters.isDarkSwitcher;
-    },
-  },
-  watch: {
-    isDark() {
-      if (this.isDark === true) {
-        document.body.classList.add("body-dark-mode");
-      } else {
-        document.body.classList.remove("body-dark-mode");
-      }
-    },
   },
 };
 </script>
@@ -37,6 +29,9 @@ export default {
   padding: 0;
   box-sizing: border-box;
   font-family: "Kumbh Sans", sans-serif;
+}
+.wrapper {
+  height: 100vh;
 }
 body {
   background-color: hsl(0, 0%, 98%);

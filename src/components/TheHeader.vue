@@ -1,13 +1,18 @@
 <template>
   <nav>
-    <ul class="navigation" :class="{ 'dark-mode-elements': this.isDark }">
+    <ul
+      class="navigation"
+      :class="{ 'dark-mode-elements': this.$store.getters.isDarkSwitcher }"
+    >
       <li>
         <h3>
           <router-link to="/">Where in the world?</router-link>
         </h3>
       </li>
       <li class="dark-mode-switcher" @click="darkModeSwitch">
-        <span v-if="isDark"><font-awesome-icon icon="moon" /> Light mode</span>
+        <span v-if="this.$store.getters.isDarkSwitcher"
+          ><font-awesome-icon icon="moon" /> Light mode</span
+        >
         <span v-else><i class="fa-regular fa-moon"></i> Dark mode</span>
       </li>
     </ul>
@@ -15,12 +20,6 @@
 </template>
 <script>
 export default {
-  computed: {
-    isDark() {
-      console.log(this.$store.getters.isDarkSwitcher);
-      return this.$store.getters.isDarkSwitcher;
-    },
-  },
   methods: {
     darkModeSwitch() {
       this.$store.dispatch("isDarkSwitcherAction");
@@ -37,6 +36,7 @@ nav {
   height: 4rem;
   box-shadow: 0 2px 2px rgba(181, 180, 180, 0.495);
   top: 0;
+  font-size: 0.8rem;
 }
 nav ul {
   display: flex;
@@ -55,5 +55,10 @@ nav ul li {
 }
 .dark-mode-switcher {
   cursor: pointer;
+}
+@media screen and (min-width: 600px) {
+  nav {
+    font-size: 1rem;
+  }
 }
 </style>

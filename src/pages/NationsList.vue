@@ -1,23 +1,29 @@
 <template>
   <base-spinner v-if="this.isLoading"></base-spinner>
-  <div v-else :class="{ 'body-dark-mode': this.isDark }">
+  <div v-else>
     <!-- No need to use keyup event as we use a computed property in the search -->
-    <section class="search" :class="{ 'body-dark-mode': this.isDark }">
-      <div class="search-bar" :class="{ 'dark-mode-elements': this.isDark }">
+    <section
+      class="search"
+      :class="{
+        'search--hidden': !showSearch,
+        'body-dark-mode': this.$store.getters.isDarkSwitcher,
+      }"
+    >
+      <div
+        class="search-bar"
+        :class="{ 'dark-mode-elements': this.$store.getters.isDarkSwitcher }"
+      >
         <i class="fa-solid fa-magnifying-glass"></i>
         <input
           class="search-input"
-          :class="{ 'dark-mode-elements': this.isDark }"
+          :class="{ 'dark-mode-elements': this.$store.getters.isDarkSwitcher }"
           type="search"
           name="search"
           placeholder="Search for a Country..."
           v-model="searchedNations"
         />
       </div>
-      <select-options
-        @select-region="filterRegion"
-        :isDark="this.isDark"
-      ></select-options>
+      <select-options @select-region="filterRegion"></select-options>
     </section>
     <section class="country-list">
       <ul class="country-list__grid" v-if="filteredNations.length > 0">
@@ -34,7 +40,7 @@
       <h3
         v-else-if="searchedNations !== ''"
         class="no-country-found"
-        :class="{ 'body-dark-mode': this.isDark }"
+        :class="{ 'body-dark-mode': this.$store.getters.isDarkSwitcher }"
       >
         Sorry, no Country have been found.<br /><br />Try to change the region
         or the spelling in search bar.<br /><br />If you want to show all the
@@ -57,16 +63,13 @@ export default {
       searchedNations: "",
       noNationsFound: false,
       isLoading: false,
+      showSearch: true,
     };
   },
   //use the computed property to access the getters from the store
   computed: {
-    isDark() {
-      return this.$store.getters.isDarkSwitcher;
-    },
     filteredNations() {
       const nations = this.$store.getters.nations;
-
       return nations.filter((nation) => {
         const searchedToLoweCase =
           this.searchedNations.toLowerCase() !== "" &&
@@ -74,52 +77,14 @@ export default {
             .toLowerCase()
             .startsWith(this.searchedNations.toLowerCase());
 
-        if (this.selectedRegion === "all") {
-          if (searchedToLoweCase) {
-            return true;
-          } else if (!this.searchedNations) {
-            return nations;
-          }
-        }
         if (
-          nation.region === "Americas" &&
-          this.selectedRegion === "Americas"
+          this.selectedRegion === "all" ||
+          nation.region.toLowerCase() === this.selectedRegion.toLowerCase()
         ) {
-          if (searchedToLoweCase) {
+          if (searchedToLoweCase || !this.searchedNations) {
             return true;
-          } else if (!this.searchedNations) {
-            return nations;
           }
         }
-        if (nation.region === "Africa" && this.selectedRegion === "Africa") {
-          if (searchedToLoweCase) {
-            return true;
-          } else if (!this.searchedNations) {
-            return nations;
-          }
-        }
-        if (nation.region === "Europe" && this.selectedRegion === "Europe") {
-          if (searchedToLoweCase) {
-            return true;
-          } else if (!this.searchedNations) {
-            return nations;
-          }
-        }
-        if (nation.region === "Oceania" && this.selectedRegion === "Oceania") {
-          if (searchedToLoweCase) {
-            return true;
-          } else if (!this.searchedNations) {
-            return nations;
-          }
-        }
-        if (nation.region === "Asia" && this.selectedRegion === "Asia") {
-          if (searchedToLoweCase) {
-            return true;
-          } else if (!this.searchedNations) {
-            return nations;
-          }
-        }
-
         return false;
       });
     },
@@ -130,6 +95,9 @@ export default {
   created() {
     //loadNations is triggered when the component is created
     this.loadNations();
+  },
+  mounted() {
+    this.searchBarScroll();
   },
   methods: {
     async loadNations() {
@@ -144,6 +112,20 @@ export default {
     filterRegion(region) {
       this.selectedRegion = region;
     },
+    searchBarScroll() {
+      //get the position in the page
+      let prev = window.pageYOffset;
+      window.addEventListener("scroll", () => {
+        //recalculate it when scroll.
+        let curr = window.pageYOffset;
+        if (prev > curr) {
+          this.showSearch = true;
+        } else {
+          this.showSearch = false;
+        }
+        prev = curr;
+      });
+    },
   },
 };
 </script>
@@ -152,11 +134,17 @@ export default {
   position: fixed;
   padding: 3rem 0;
   top: 1.5rem;
-  z-index: 90;
+  z-index: 10;
   width: 100%;
   height: 11rem;
   margin-top: 1.5rem;
-  background-color: hsl(0, 0%, 98%);
+  transition: transform 0.5s;
+  transform: translate3d(0, 0, 0);
+}
+.search--hidden {
+  box-shadow: none;
+  transition: transform 0.5s;
+  transform: translate3d(0, -110%, 0);
 }
 .search-bar {
   position: relative;
@@ -177,24 +165,21 @@ export default {
   box-shadow: 1px 1px 5px gainsboro;
   color: black;
 }
-
 .fa-magnifying-glass {
   position: absolute;
   left: 25px;
   font-size: 1.2rem;
 }
-
 .country-list {
   width: 100%;
   /*  display: flex;
   justify-content: center; */
-  margin-top: 18rem;
+  padding-top: 14rem;
 }
-
 .country-list__grid {
   display: grid;
   width: 100%;
-  grid-template-columns: repeat(auto-fill, 255px);
+  grid-template-columns: repeat(auto-fill, 19rem);
   justify-content: center;
   gap: 5rem;
   padding: 1.5rem 1.5rem 0.9rem 1.5rem;
@@ -216,11 +201,7 @@ export default {
   box-shadow: 1px 1px 5px gainsboro;
   color: rgba(245, 55, 55, 0.995);
 }
-
 @media screen and (min-width: 600px) {
-  /* .country-list__grid {
-    grid-template-columns: repeat(2, 1fr);
-  } */
   .no-country-found {
     width: 80%;
     height: 300px;
@@ -251,15 +232,14 @@ export default {
   .search-input {
     width: 100%;
   }
-
   .country-list {
     padding: 0 3rem;
-    margin-top: 11rem;
+    padding-top: 11rem;
   }
 }
 @media screen and (min-width: 1200px) {
   .country-list__grid {
-    /* grid-template-columns: repeat(auto-fill, 230px); */
+    grid-template-columns: repeat(auto-fill, 255px);
     gap: 2rem;
     height: 55%;
   }

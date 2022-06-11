@@ -24,7 +24,9 @@
           <p v-if="borders.length === 0">No border Countries</p>
           <base-button
             v-else
-            :class="{ 'dark-mode-elements': this.isDark }"
+            :class="{
+              'dark-mode-elements': this.$store.getters.isDarkSwitcher,
+            }"
             class="borders-btn"
             v-for="(border, index) in borders"
             :key="index"
@@ -55,19 +57,7 @@ export default {
   data() {
     return {};
   },
-  watch: {
-    $route(to, from) {
-      console.log(to, from);
-      console.log(this.borders);
-    },
-  },
-  computed: {
-    isDark() {
-      return this.$store.getters.isDarkSwitcher;
-    },
-  },
   created() {
-    //this.loadNation();
     this.loadNations();
   },
   methods: {

@@ -1,5 +1,8 @@
 <template>
-  <div class="not-found" :class="{ 'dark-mode-elements': this.isDark }">
+  <div
+    class="not-found"
+    :class="{ 'dark-mode-elements': this.$store.getters.isDarkSwitcher }"
+  >
     <h1>404</h1>
     <p>
       Sorry, page not found. You can go back to the homepage by clicking
@@ -7,15 +10,6 @@
     </p>
   </div>
 </template>
-<script>
-export default {
-  computed: {
-    isDark() {
-      return this.$store.getters.isDarkSwitcher;
-    },
-  },
-};
-</script>
 <style scoped>
 .not-found {
   /*  display: flex;

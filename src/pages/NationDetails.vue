@@ -1,6 +1,6 @@
 <template>
   <div class="country">
-    <base-button class="back-button" :isDark="isDark">
+    <base-button class="back-button">
       <span class="back-arrow">&#x2190;</span> Back</base-button
     >
     <base-spinner v-if="this.isLoading"></base-spinner>
@@ -38,9 +38,6 @@ export default {
     };
   },
   computed: {
-    isDark() {
-      return this.$store.getters.isDarkSwitcher;
-    },
     filteredNation() {
       //return this.$store.getters.nations;
       return this.$store.getters.nations.find((country) => {
@@ -145,8 +142,8 @@ export default {
 <style scoped>
 .country {
   position: relative;
-  top: 7rem;
-  padding: 0 1.5rem;
+  padding: 7rem 1.5rem 0 1.5rem;
+  height: 100vh;
 }
 .button.back-button {
   display: flex;

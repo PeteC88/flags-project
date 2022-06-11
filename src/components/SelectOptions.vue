@@ -1,8 +1,11 @@
 <template>
-  <div class="select-box" :class="{'dark-mode-elements': this.isDark }">
+  <div
+    class="select-box"
+    :class="{ 'dark-mode-elements': this.$store.getters.isDarkSwitcher }"
+  >
     <div
       class="select__default"
-      :class="{'dark-mode-elements': this.isDark }"
+      :class="{ 'dark-mode-elements': this.$store.getters.isDarkSwitcher }"
       @click="openBox"
     >
       {{ selection }}
@@ -11,7 +14,7 @@
     <ul
       class="select__options"
       v-show="open"
-      :class="{ 'dark-mode-elements': this.isDark }"
+      :class="{ 'dark-mode-elements': this.$store.getters.isDarkSwitcher }"
     >
       <li class="select__option" @click="selectRegions('Africa')">Africa</li>
       <li class="select__option" @click="selectRegions('Americas')">
@@ -25,7 +28,6 @@
 </template>
 <script>
 export default {
-  props: ["isDark"],
   emits: ["select-region"],
   data() {
     return {

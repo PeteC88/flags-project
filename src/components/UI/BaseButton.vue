@@ -2,7 +2,7 @@
   <router-link
     :to="to"
     class="button"
-    :class="{ 'dark-mode-elements': this.isDark }"
+    :class="{ 'dark-mode-elements': this.$store.getters.isDarkSwitcher }"
   >
     <slot></slot>
   </router-link>
@@ -15,10 +15,6 @@ export default {
       type: String,
       required: false,
       default: "/",
-    },
-    isDark: {
-      type: Boolean,
-      reauired: false,
     },
   },
 };

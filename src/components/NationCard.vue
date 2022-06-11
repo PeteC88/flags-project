@@ -3,7 +3,10 @@
     <router-link :to="nationDetailsLink"
       ><img :src="flags.png" :alt="name + ' flag'"
     /></router-link>
-    <div class="country-details" :class="{ 'dark-mode-elements': this.isDark }">
+    <div
+      class="country-details"
+      :class="{ 'dark-mode-elements': this.$store.getters.isDarkSwitcher }"
+    >
       <h3 class="nation-card__title">
         <router-link :to="nationDetailsLink">{{ name }}</router-link>
       </h3>
@@ -23,9 +26,6 @@ export default {
   computed: {
     nationDetailsLink() {
       return this.$route.path + "/" + this.name.split(" ").join("-");
-    },
-    isDark() {
-      return this.$store.getters.isDarkSwitcher;
     },
   },
 };
