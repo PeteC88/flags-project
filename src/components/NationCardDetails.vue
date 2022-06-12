@@ -1,5 +1,7 @@
 <template>
-  <div class="country__container">
+  <div
+    class="country__container"
+  >
     <div class="img-flag">
       <img :src="flags.svg" :alt="name + ' flag'" />
     </div>

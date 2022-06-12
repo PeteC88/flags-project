@@ -193,10 +193,10 @@ export default {
   justify-content: center;
   align-items: center;
   position: relative;
-  top: 6rem;
+  top: 2rem;
   text-align: center;
-  padding: 0.9rem 1rem 0.9rem 3.5rem;
-  font-size: 1.5rem;
+  padding: 0.9rem 1rem 0.9rem 1rem;
+  font-size: 1rem;
   border-radius: 20px;
   background-color: white;
   box-shadow: 1px 1px 5px gainsboro;
@@ -204,15 +204,9 @@ export default {
 }
 @media screen and (min-width: 600px) {
   .no-country-found {
-    width: 80%;
     height: 300px;
     top: 8rem;
-    text-align: center;
-    padding: 0.9rem 1rem 0.9rem 3.5rem;
     font-size: 1.5rem;
-    border-radius: 20px;
-    background-color: white;
-    box-shadow: 1px 1px 5px gainsboro;
   }
 }
 @media screen and (min-width: 900px) {
